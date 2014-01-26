@@ -25,7 +25,7 @@ public class NewsFeed3 extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_feed3);
-        ArrayList<Drawable> d = getIms(p1, p2);
+       // ArrayList<Drawable> d = getIms(p1, p2);
         GridView gridview = (GridView) findViewById(R.id.gridview);
         gridview.setAdapter(new ImageAdapter(this));
 
