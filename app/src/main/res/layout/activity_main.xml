@@ -44,4 +44,9 @@
         android:layout_height="wrap_content"
         android:text="@string/camera"
         android:onClick="camera" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="newsfeed2"
+        android:onClick="newsfeed3" />
 </LinearLayout>

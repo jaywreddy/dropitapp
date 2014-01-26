@@ -80,41 +80,50 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(this, NewsFeed.class);
 		startActivity(intent);
 	}
-	
-	public static class Access extends AsyncTask {
-		@Override
-		//This i where i get json objects from the server
-		protected Object doInBackground(Object... urls) {
-			String site = "http://warm-ridge-1785.herokuapp.com/";
-			HttpClient httpclient = new DefaultHttpClient();  
-			HttpPost request = new HttpPost( site + (String) urls[0]);
-			//ResponseHandler<String> handler = new BasicResponseHandler();
-			HttpResponse result;
-			try {
-				StringEntity s = new StringEntity(urls[1].toString());
-		        request.setEntity(s);
-		        request.addHeader("accept", "application/json");
-				result = httpclient.execute(request);//, handler);
-			/*Log.d("yay", result);
-			ArrayList<String> vals = (ArrayList<String>) urls[1];
-			JSONArray jsons = new JSONArray(result);
-			int n = jsons.length();
-			for(int i = 0; i < n; i++){
-				JSONObject id = jsons.getJSONObject(i);
-				vals.add(id.getString("u'_id'"));
-			}
-			Log.d("yay2", result);*/
-			}
-			 catch (Exception e) {
-					Log.d("error5", e.toString());
-					return null;
-			} 
-			Log.d("done", result.toString());
-			httpclient.getConnectionManager().shutdown();
-			return null;
-		}
-		
-	}
+
+    public static class Access extends AsyncTask {
+        @Override
+        //This i where i get json objects from the server and also where i post them
+        protected Object doInBackground(Object... urls) {
+            String site = "http://warm-ridge-1785.herokuapp.com/";
+            HttpClient httpclient = new DefaultHttpClient();
+            HttpPost request = new HttpPost( site + (String) urls[1]);
+            //ResponseHandler<String> handler = new BasicResponseHandler();
+            HttpResponse result;
+            String todo = (String) urls[0];
+            try {
+                if(todo.equals("comment") || todo.equals("picture")){
+                    StringEntity s = new StringEntity(urls[2].toString());
+                    request.setEntity(s);
+                }
+                result = httpclient.execute(request);
+                if(todo.equals("comnews")){
+                    ArrayList<String> vals = (ArrayList<String>) urls[2];
+                    JSONArray jsons = new JSONArray(result);
+                    int n = jsons.length();
+                    for(int i = 0; i < n; i++){
+                        JSONObject id = jsons.getJSONObject(i);
+                        vals.add(id.getString("u'_id'"));
+                    }
+                }
+            }
+            catch (Exception e) {
+                Log.d("error5", e.toString());
+                return null;
+            }
+            Log.d("done", result.toString());
+            httpclient.getConnectionManager().shutdown();
+            return null;
+        }
+
+    }
+
+    public void newsfeed3(View view) {
+        // Do something in response to button
+        Intent intent = new Intent(this, NewsFeed3.class);
+        startActivity(intent);
+    }
+
 	public void sendserver(View view){
 		//forget this its old
 		EditText editText = (EditText) findViewById(R.id.edit_message);
